@@ -1,38 +1,29 @@
-const idNameArray = [
-  ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace'],
-  ['Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete'],
-  ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'],
-  ['ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight'],
-  ['ControlLeft', 'OSLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight']
-];
-
-const ruLowerCaseButtons = [
-  ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
-  ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del'],
-  ['CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
-  ['ShiftL', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '↑', 'ShiftR'],
-  ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '←', '↓', '→', 'Ctrl']
-];
-
-const enLowerCaseButtons = [
-  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
-  ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],
-  ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter'],
-  ['ShiftL', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'ShiftR'],
-  ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '←', '↓', '→', 'Ctrl']
-];
+import {idNameArray, ruLowerCaseButtons, ruCapsCaseButtons, enCapsCaseButtons, enLowerCaseButtons} from './keyboards-array.js';
 
 let arrayButtons = []
 
-const createKeyboardElements = (language) => {
+const createKeyboardElements = (language, caps) => {
   if (language === 'ru') {
-    arrayButtons = ruLowerCaseButtons.map((item)=>{
+    if (caps === false) {
+      arrayButtons = ruLowerCaseButtons.map((item)=>{
         return [...item]
       });
+    } else if (caps === true) {
+      arrayButtons = ruCapsCaseButtons.map((item)=>{
+        return [...item]
+      });
+    }
+
   } else if (language === 'en') {
-    arrayButtons = enLowerCaseButtons.map((item)=>{
+    if (caps === false) {
+      arrayButtons = enLowerCaseButtons.map((item)=>{
         return [...item]
       });
+    } else if (caps === true) {
+      arrayButtons = enCapsCaseButtons.map((item)=>{
+        return [...item]
+      });
+    }
   }
 
   for (let i = 0; i < arrayButtons.length; i++) {
@@ -84,7 +75,13 @@ const createKeyboardElements = (language) => {
   document.getElementById('Delete').classList.add('keyboard__button_blue');
   document.getElementById('Backspace').classList.add('keyboard__button_blue');
 
-
 };
 
-export {createKeyboardElements};
+const removeKeyboardRow = () => {
+  const keyboardContainer = document.querySelector('.keyboard');
+  keyboardContainer.innerHTML = '';
+}
+
+
+
+export {createKeyboardElements, removeKeyboardRow};
