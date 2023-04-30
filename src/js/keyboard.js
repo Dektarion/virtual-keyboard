@@ -14,34 +14,45 @@ const ruLowerCaseButtons = [
   ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '←', '↓', '→', 'Ctrl']
 ];
 
-// const enLowerCaseButtons = [
-//   ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
-//   ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],
-//   ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter'],
-//   ['ShiftL', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'ShiftR'],
-//   ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '←', '↓', '→', 'Ctrl']
-// ];
+const enLowerCaseButtons = [
+  ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
+  ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'],
+  ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter'],
+  ['ShiftL', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '↑', 'ShiftR'],
+  ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '←', '↓', '→', 'Ctrl']
+];
 
+let arrayButtons = []
 
-const createKeyboardElements = () => {
-  for (let i = 0; i < ruLowerCaseButtons.length; i++) {
+const createKeyboardElements = (language) => {
+  if (language === 'ru') {
+    arrayButtons = ruLowerCaseButtons.map((item)=>{
+        return [...item]
+      });
+  } else if (language === 'en') {
+    arrayButtons = enLowerCaseButtons.map((item)=>{
+        return [...item]
+      });
+  }
+
+  for (let i = 0; i < arrayButtons.length; i++) {
     let buttonRow = document.createElement('div');
     buttonRow.classList.add('keyboard__row');
-    for (let n = 0; n < ruLowerCaseButtons[i].length; n++) {
+    for (let n = 0; n < arrayButtons[i].length; n++) {
       const button = document.createElement('div');
-      button.innerText = ruLowerCaseButtons[i][n];
+      button.innerText = arrayButtons[i][n];
       button.id = idNameArray[i][n];
-      if (ruLowerCaseButtons[i][n] === 'Backspace' ||
-      ruLowerCaseButtons[i][n] === 'Enter' ||
-      ruLowerCaseButtons[i][n] === 'ShiftL' ||
-      ruLowerCaseButtons[i][n] === 'Ctrl' ||
-      ruLowerCaseButtons[i][n] === 'CapsLock') {
+      if (arrayButtons[i][n] === 'Backspace' ||
+      arrayButtons[i][n] === 'Enter' ||
+      arrayButtons[i][n] === 'ShiftL' ||
+      arrayButtons[i][n] === 'Ctrl' ||
+      arrayButtons[i][n] === 'CapsLock') {
         button.classList.add('keyboard__button', 'keyboard__button_long');
-      } else if (ruLowerCaseButtons[i][n] === ' ') {
+      } else if (arrayButtons[i][n] === ' ') {
         button.classList.add('keyboard__button', 'keyboard__button_space');
-      } else if (ruLowerCaseButtons[i][n] === 'ShiftR') {
+      } else if (arrayButtons[i][n] === 'ShiftR') {
         button.classList.add('keyboard__button', 'keyboard__button_shiftR');
-      } else if (ruLowerCaseButtons[i][n] === 'Tab') {
+      } else if (arrayButtons[i][n] === 'Tab') {
         button.classList.add('keyboard__button', 'keyboard__button_tab');
       } else {
         button.classList.add('keyboard__button');
@@ -72,6 +83,8 @@ const createKeyboardElements = () => {
   document.getElementById('Enter').classList.add('keyboard__button_blue');
   document.getElementById('Delete').classList.add('keyboard__button_blue');
   document.getElementById('Backspace').classList.add('keyboard__button_blue');
+
+
 };
 
 export {createKeyboardElements};
