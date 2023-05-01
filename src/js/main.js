@@ -7,6 +7,7 @@ import {createKeyboardElements, removeKeyboardRow} from './keyboard.js';
 let language = localStorage.getItem('language') ?? 'en';
 let caps = false;
 let shiftButton = false;
+// let innerText = '';
 
 const setLocalStorage = () => {
   localStorage.setItem('language', language);
@@ -127,5 +128,4 @@ document.addEventListener ('keyup', (event) => {
   }
 });
 
-// Клавиатура виртуальная
-
+export {language,caps, shiftButton}

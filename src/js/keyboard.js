@@ -1,4 +1,5 @@
 import {idNameArray, ruLowerCaseButtons, ruCapsCaseButtons, ruShiftCaseButtons, ruShiftCapsCaseButtons, enCapsCaseButtons, enLowerCaseButtons, enShiftCaseButtons, enShiftCapsCaseButtons} from './keyboards-array.js';
+import {keyboardMouse} from './mouse-keyboard.js';
 
 let arrayButtons = []
 
@@ -89,6 +90,9 @@ const createKeyboardElements = (language, caps, shift) => {
   document.getElementById('Enter').classList.add('keyboard__button_blue');
   document.getElementById('Delete').classList.add('keyboard__button_blue');
   document.getElementById('Backspace').classList.add('keyboard__button_blue');
+
+  keyboardMouse();
+
 
 };
 
