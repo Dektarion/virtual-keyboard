@@ -1,4 +1,5 @@
 import {createElements} from './main-elements.js';
+import {createLangCheck, changeLangCheck} from './language-check.js';
 import {createKeyboardElements, removeKeyboardRow} from './keyboard.js';
 
 //Сохранение языка в localStorage
@@ -26,13 +27,13 @@ window.addEventListener('load', getLocalStorage);
 
 // localStorage.clear();
 
-
 // Создание элементов
 
 createElements();
+createLangCheck(language);
 createKeyboardElements(language, caps);
 
-// Анимация клавиш
+// Клавиатура
 
 document.addEventListener ('keydown', (event) => {
   if (event.code === 'Tab' || event.code === 'AltLeft' || event.code === 'AltRight') {
@@ -55,6 +56,7 @@ document.addEventListener ('keydown', (event) => {
   if ((event.code === 'ShiftLeft' && event.ctrlKey) || (event.code === 'ControlLeft' && event.shiftKey)) {
     if (language === 'en') {
       language = 'ru';
+      changeLangCheck(language);
       setLocalStorage(language);
       removeKeyboardRow();
       createKeyboardElements(language, caps);
@@ -62,6 +64,7 @@ document.addEventListener ('keydown', (event) => {
       document.getElementById('ControlLeft').classList.add('active');
     } else {
       language = 'en';
+      changeLangCheck(language);
       setLocalStorage(language);
       removeKeyboardRow();
       createKeyboardElements(language, caps);
