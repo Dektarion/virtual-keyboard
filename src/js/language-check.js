@@ -2,7 +2,7 @@ const createLangCheck = (lang) => {
 
   const languageText = document.createElement('p');
   languageText.classList.add('main-section__text');
-  languageText.innerHTML = `Текущий язык: <span class = "main-section__lang">${lang}</span>`;
+  languageText.innerHTML = `Текущий язык раскладки: <span class = "main-section__lang">${lang}</span>`;
   document.querySelector('.main-section__text-container').append(languageText);
 
 }

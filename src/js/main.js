@@ -4,26 +4,13 @@ import {createKeyboardElements, removeKeyboardRow} from './keyboard.js';
 
 //Сохранение языка в localStorage
 
-let language = 'en';
+let language = localStorage.getItem('language') ?? 'en';
 let caps = false;
+let shiftButton = false;
 
 const setLocalStorage = () => {
   localStorage.setItem('language', language);
 };
-
-window.addEventListener('beforeunload', setLocalStorage);
-
-// const getLocalStorage = () => {
-//   if(localStorage.getItem('language')) {
-//     language = localStorage.getItem('language');
-//   }
-// };
-
-const getLocalStorage = () => {
-  language = localStorage.getItem('language');
-};
-
-window.addEventListener('load', getLocalStorage);
 
 // localStorage.clear();
 
@@ -31,11 +18,12 @@ window.addEventListener('load', getLocalStorage);
 
 createElements();
 createLangCheck(language);
-createKeyboardElements(language, caps);
+createKeyboardElements(language, caps, shiftButton);
 
-// Клавиатура
+// Клавиатура физическая
 
 document.addEventListener ('keydown', (event) => {
+  document.getElementById('textArea').focus();
   if (event.code === 'Tab' || event.code === 'AltLeft' || event.code === 'AltRight') {
     event.preventDefault();
   }
@@ -44,35 +32,76 @@ document.addEventListener ('keydown', (event) => {
     if (caps === false) {
       caps = true
       removeKeyboardRow();
-      createKeyboardElements(language, caps);
+      createKeyboardElements(language, caps, shiftButton);
       document.getElementById(event.code).classList.toggle('active');
     } else {
       caps = false;
       removeKeyboardRow();
-      createKeyboardElements(language, caps);
+      createKeyboardElements(language, caps, shiftButton);
     }
   } else document.getElementById(event.code).classList.add('active');
 
-  if ((event.code === 'ShiftLeft' && event.ctrlKey) || (event.code === 'ControlLeft' && event.shiftKey)) {
-    if (language === 'en') {
-      language = 'ru';
-      changeLangCheck(language);
-      setLocalStorage(language);
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    if (document.getElementById('CapsLock').classList.contains('active')) {
+      shiftButton = true;
       removeKeyboardRow();
-      createKeyboardElements(language, caps);
-      document.getElementById('ShiftLeft').classList.add('active');
-      document.getElementById('ControlLeft').classList.add('active');
+      createKeyboardElements(language, caps, shiftButton);
+      document.getElementById(event.code).classList.add('active');
+      document.getElementById('CapsLock').classList.toggle('active');
     } else {
-      language = 'en';
-      changeLangCheck(language);
-      setLocalStorage(language);
+      shiftButton = true;
       removeKeyboardRow();
-      createKeyboardElements(language, caps);
-      document.getElementById('ShiftLeft').classList.add('active');
-      document.getElementById('ControlLeft').classList.add('active');
+      createKeyboardElements(language, caps, shiftButton);
+      document.getElementById(event.code).classList.add('active');
     }
   }
-})
+
+  if ((event.code === 'ShiftLeft' && event.ctrlKey) || (event.code === 'ControlLeft' && event.shiftKey)) {
+    if (document.getElementById('CapsLock').classList.contains('active')) {
+      if (language === 'en') {
+        language = 'ru';
+        shiftButton = true;
+        changeLangCheck(language);
+        setLocalStorage(language);
+        removeKeyboardRow();
+        createKeyboardElements(language, caps, shiftButton);
+        document.getElementById('ShiftLeft').classList.add('active');
+        document.getElementById('ControlLeft').classList.add('active');
+        document.getElementById('CapsLock').classList.toggle('active');
+      } else {
+        language = 'en';
+        shiftButton = true;
+        changeLangCheck(language);
+        setLocalStorage(language);
+        removeKeyboardRow();
+        createKeyboardElements(language, caps, shiftButton);
+        document.getElementById('ShiftLeft').classList.add('active');
+        document.getElementById('ControlLeft').classList.add('active');
+        document.getElementById('CapsLock').classList.toggle('active');
+      }
+    } else {
+      if (language === 'en') {
+        language = 'ru';
+        shiftButton = true;
+        changeLangCheck(language);
+        setLocalStorage(language);
+        removeKeyboardRow();
+        createKeyboardElements(language, caps, shiftButton);
+        document.getElementById('ShiftLeft').classList.add('active');
+        document.getElementById('ControlLeft').classList.add('active');
+      } else {
+        language = 'en';
+        shiftButton = true;
+        changeLangCheck(language);
+        setLocalStorage(language);
+        removeKeyboardRow();
+        createKeyboardElements(language, caps, shiftButton);
+        document.getElementById('ShiftLeft').classList.add('active');
+        document.getElementById('ControlLeft').classList.add('active');
+      }
+    }
+  }
+});
 
 document.addEventListener ('keyup', (event) => {
   if (event.code === 'Tab' || event.code === 'AltLeft' || event.code === 'AltRight') {
@@ -81,4 +110,22 @@ document.addEventListener ('keyup', (event) => {
   if (event.code !== 'CapsLock') {
     document.getElementById(event.code).classList.remove('active');
   }
-})
+
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    if (document.getElementById('CapsLock').classList.contains('active')) {
+      shiftButton = false;
+      removeKeyboardRow();
+      createKeyboardElements(language, caps, shiftButton);
+      document.getElementById(event.code).classList.remove('active');
+      document.getElementById('CapsLock').classList.toggle('active');
+    } else {
+      shiftButton = false;
+      removeKeyboardRow();
+      createKeyboardElements(language, caps, shiftButton);
+      document.getElementById(event.code).classList.remove('active');
+    }
+  }
+});
+
+// Клавиатура виртуальная
+

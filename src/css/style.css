@@ -32,6 +32,7 @@
   align-items: center;
 }
 .main-section__text-area {
+  outline: none;
   padding: 10px;
   font-family: "Roboto", sans-serif;
   font-size: 24px;

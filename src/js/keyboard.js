@@ -1,11 +1,19 @@
-import {idNameArray, ruLowerCaseButtons, ruCapsCaseButtons, enCapsCaseButtons, enLowerCaseButtons} from './keyboards-array.js';
+import {idNameArray, ruLowerCaseButtons, ruCapsCaseButtons, ruShiftCaseButtons, ruShiftCapsCaseButtons, enCapsCaseButtons, enLowerCaseButtons, enShiftCaseButtons, enShiftCapsCaseButtons} from './keyboards-array.js';
 
 let arrayButtons = []
 
-const createKeyboardElements = (language, caps) => {
+const createKeyboardElements = (language, caps, shift) => {
   if (language === 'ru') {
-    if (caps === false) {
+    if (shift === false && caps === false) {
       arrayButtons = ruLowerCaseButtons.map((item)=>{
+        return [...item]
+      });
+    } else if (shift === true && caps === false) {
+      arrayButtons = ruShiftCaseButtons.map((item)=>{
+        return [...item]
+      });
+    } else if (shift === true && caps === true) {
+      arrayButtons = ruShiftCapsCaseButtons.map((item)=>{
         return [...item]
       });
     } else if (caps === true) {
@@ -13,10 +21,17 @@ const createKeyboardElements = (language, caps) => {
         return [...item]
       });
     }
-
   } else if (language === 'en') {
-    if (caps === false) {
+    if (shift === false && caps === false) {
       arrayButtons = enLowerCaseButtons.map((item)=>{
+        return [...item]
+      });
+    } else if (shift === true && caps === false) {
+      arrayButtons = enShiftCaseButtons.map((item)=>{
+        return [...item]
+      });
+    } else if (shift === true && caps === true) {
+      arrayButtons = enShiftCapsCaseButtons.map((item)=>{
         return [...item]
       });
     } else if (caps === true) {
